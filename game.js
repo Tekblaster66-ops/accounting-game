@@ -647,6 +647,112 @@ function getProgress(level) {
 // ============================================================
 // UTILITIES
 // ============================================================
+// ============================================================
+// LEARN MODE
+// ============================================================
+let lessonState = { topicIndex: 0, cardIndex: 0 };
+
+function openLearn() {
+    const grid = document.getElementById('topic-grid');
+    grid.innerHTML = '';
+    LESSONS.forEach((lesson, i) => {
+        const card = document.createElement('button');
+        card.className = 'mode-card';
+        card.style.borderLeft = `4px solid ${lesson.color}`;
+        card.innerHTML = `
+            <div class="mode-icon">${lesson.icon}</div>
+            <h4>${lesson.title}</h4>
+            <p>${lesson.cards.length} concepts</p>
+        `;
+        card.onclick = () => openLesson(i);
+        grid.appendChild(card);
+    });
+    showScreen('learn-topics-screen');
+}
+
+function openLesson(topicIndex) {
+    lessonState.topicIndex = topicIndex;
+    lessonState.cardIndex = 0;
+    const lesson = LESSONS[topicIndex];
+
+    document.getElementById('lesson-topic-title').textContent = lesson.title;
+    renderLessonCard();
+    updateLessonNav();
+    showScreen('lesson-screen');
+}
+
+function renderLessonCard() {
+    const lesson = LESSONS[lessonState.topicIndex];
+    const card = lesson.cards[lessonState.cardIndex];
+    const area = document.getElementById('lesson-card-area');
+
+    area.innerHTML = `
+        <div class="lesson-card" style="border-top: 3px solid ${lesson.color}">
+            <h3 class="lesson-card-term">${card.term}</h3>
+            <div class="lesson-section">
+                <div class="lesson-section-label">What is it?</div>
+                <p>${card.what}</p>
+            </div>
+            <div class="lesson-section">
+                <div class="lesson-section-label">Why does it work this way?</div>
+                <p>${card.why}</p>
+            </div>
+            <div class="lesson-section">
+                <div class="lesson-section-label">Example</div>
+                <p class="lesson-example">${card.example}</p>
+            </div>
+        </div>
+    `;
+}
+
+function updateLessonNav() {
+    const lesson = LESSONS[lessonState.topicIndex];
+    const total = lesson.cards.length;
+    const current = lessonState.cardIndex;
+
+    document.getElementById('lesson-card-counter').textContent = `${current + 1} / ${total}`;
+    document.getElementById('lesson-prev').style.visibility = current === 0 ? 'hidden' : 'visible';
+    document.getElementById('lesson-next').textContent = current === total - 1 ? 'Done' : 'Next \u2192';
+
+    // Progress bar
+    document.getElementById('lesson-progress').style.width = ((current + 1) / total * 100) + '%';
+
+    // Dots
+    const dots = document.getElementById('lesson-dots');
+    dots.innerHTML = '';
+    for (let i = 0; i < total; i++) {
+        const dot = document.createElement('span');
+        dot.className = 'lesson-dot' + (i === current ? ' active' : '');
+        dot.style.cssText = `width:8px;height:8px;border-radius:50%;background:${i === current ? lesson.color : 'var(--border)'};display:inline-block;margin:0 3px;cursor:pointer;transition:0.2s;`;
+        dot.onclick = () => { lessonState.cardIndex = i; renderLessonCard(); updateLessonNav(); };
+        dots.appendChild(dot);
+    }
+}
+
+function lessonPrev() {
+    if (lessonState.cardIndex > 0) {
+        lessonState.cardIndex--;
+        renderLessonCard();
+        updateLessonNav();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+function lessonNext() {
+    const lesson = LESSONS[lessonState.topicIndex];
+    if (lessonState.cardIndex < lesson.cards.length - 1) {
+        lessonState.cardIndex++;
+        renderLessonCard();
+        updateLessonNav();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        showScreen('learn-topics-screen');
+    }
+}
+
+// ============================================================
+// UTILITIES
+// ============================================================
 function shuffle(arr) {
     const a = [...arr];
     for (let i = a.length - 1; i > 0; i--) {
