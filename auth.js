@@ -2,13 +2,14 @@
 // AUTH — Member whitelist + password
 // ============================================================
 
-// TODO: Replace with actual password and member list
-const CLUB_PASSWORD = "CHANGE_ME";
+const CLUB_PASSWORD = "GSIF2026Recruit";
 
 const MEMBERS = [
-    // TODO: Add member names here
-    // "Reed Coene",
-    // "John Doe",
+    "Reed Coene",
+    "Joao Murta",
+    "Colin Murphy",
+    "Adam Tahiri",
+    "Blake Disler",
 ];
 
 // ============================================================
