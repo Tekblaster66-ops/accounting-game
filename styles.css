@@ -168,6 +168,12 @@ body {
     margin-top: 40px;
 }
 
+.login-name-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
 .login-field {
     margin-bottom: 20px;
     text-align: left;

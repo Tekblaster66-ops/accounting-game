@@ -16,35 +16,37 @@ const MEMBERS = [
 // LOGIN / LOGOUT
 // ============================================================
 function initAuth() {
-    // Populate name dropdown
-    const select = document.getElementById('login-name');
-    MEMBERS.forEach(name => {
-        const opt = document.createElement('option');
-        opt.value = name;
-        opt.textContent = name;
-        select.appendChild(opt);
-    });
-
     // Check if already logged in
     const session = getSession();
-    if (session && MEMBERS.includes(session.name)) {
+    if (session && MEMBERS.map(n => n.toLowerCase()).includes(session.name.toLowerCase())) {
         enterApp(session.name);
     }
 
     // Enter key submits login
-    document.getElementById('login-password').addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') attemptLogin();
+    document.querySelectorAll('#login-first, #login-last, #login-password').forEach(el => {
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') attemptLogin();
+        });
     });
 }
 
 function attemptLogin() {
-    const name = document.getElementById('login-name').value;
+    const first = document.getElementById('login-first').value.trim();
+    const last = document.getElementById('login-last').value.trim();
     const password = document.getElementById('login-password').value;
     const errorEl = document.getElementById('login-error');
     errorEl.textContent = '';
 
-    if (!name) {
-        errorEl.textContent = 'Please select your name.';
+    if (!first || !last) {
+        errorEl.textContent = 'Please enter your first and last name.';
+        return;
+    }
+
+    const fullName = first + ' ' + last;
+    const match = MEMBERS.find(m => m.toLowerCase() === fullName.toLowerCase());
+
+    if (!match) {
+        errorEl.textContent = 'Name not found. Contact your club admin for access.';
         return;
     }
 
@@ -54,9 +56,9 @@ function attemptLogin() {
         return;
     }
 
-    // Save session
-    localStorage.setItem('acct_game_session', JSON.stringify({ name, ts: Date.now() }));
-    enterApp(name);
+    // Save session with canonical name
+    localStorage.setItem('acct_game_session', JSON.stringify({ name: match, ts: Date.now() }));
+    enterApp(match);
 }
 
 function enterApp(name) {
@@ -71,7 +73,8 @@ function logout() {
     document.getElementById('landing-screen').classList.remove('active');
     document.getElementById('login-screen').classList.add('active');
     document.getElementById('login-password').value = '';
-    document.getElementById('login-name').value = '';
+    document.getElementById('login-first').value = '';
+    document.getElementById('login-last').value = '';
     document.getElementById('login-error').textContent = '';
 }
 
