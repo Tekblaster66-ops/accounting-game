@@ -633,13 +633,23 @@ function updateLevelProgress() {
 // ============================================================
 function saveProgress(level, pct) {
     if (level <= 0) return;
+    // Save globally (backwards compat)
     const key = 'accounting_game_progress';
     const data = JSON.parse(localStorage.getItem(key) || '{}');
     data[level] = Math.max(data[level] || 0, pct);
     localStorage.setItem(key, JSON.stringify(data));
+    // Save per-user if logged in
+    if (typeof saveUserProgress === 'function') {
+        saveUserProgress(level, pct);
+    }
 }
 
 function getProgress(level) {
+    // Prefer per-user progress if available
+    if (typeof getUserProgress === 'function') {
+        const userPct = getUserProgress(level);
+        if (userPct > 0) return userPct;
+    }
     const data = JSON.parse(localStorage.getItem('accounting_game_progress') || '{}');
     return data[level] || 0;
 }

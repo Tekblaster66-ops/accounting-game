@@ -10,9 +10,46 @@
 </head>
 <body>
     <div id="app">
+        <!-- Login Screen -->
+        <div id="login-screen" class="screen active">
+            <div class="login-container">
+                <div class="logo-area">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 80 80" fill="none">
+                            <rect x="5" y="20" width="22" height="50" rx="3" fill="#6366f1" opacity="0.9"/>
+                            <rect x="29" y="10" width="22" height="60" rx="3" fill="#818cf8" opacity="0.9"/>
+                            <rect x="53" y="30" width="22" height="40" rx="3" fill="#a5b4fc" opacity="0.9"/>
+                            <circle cx="16" cy="15" r="6" fill="#f59e0b"/>
+                        </svg>
+                    </div>
+                    <h1 class="main-title">3 Statements Mastery</h1>
+                    <p class="subtitle">Members Only</p>
+                </div>
+                <div class="login-box">
+                    <div class="login-field">
+                        <label for="login-name">Your Name</label>
+                        <select id="login-name">
+                            <option value="">Select your name...</option>
+                            <!-- Populated by auth.js -->
+                        </select>
+                    </div>
+                    <div class="login-field">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Enter club password" autocomplete="off">
+                    </div>
+                    <div class="login-error" id="login-error"></div>
+                    <button class="login-btn" onclick="attemptLogin()">Sign In</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Landing Screen -->
-        <div id="landing-screen" class="screen active">
+        <div id="landing-screen" class="screen">
             <div class="landing-container">
+                <div class="user-bar">
+                    <span class="user-greeting" id="user-greeting">Welcome back</span>
+                    <button class="logout-btn" onclick="logout()">Sign Out</button>
+                </div>
                 <div class="logo-area">
                     <div class="logo-icon">
                         <svg viewBox="0 0 80 80" fill="none">
@@ -64,6 +101,13 @@
                             <span>Create</span>
                             <small>Multi-step problems</small>
                         </div>
+                    </div>
+                </div>
+
+                <div class="progress-dashboard" id="progress-dashboard">
+                    <h3>Your Progress</h3>
+                    <div class="progress-overview" id="progress-overview">
+                        <!-- Populated by JS -->
                     </div>
                 </div>
 
@@ -345,6 +389,7 @@
             </div>
         </div>
 
+    <script src="auth.js"></script>
     <script src="lessons.js"></script>
     <script src="questions.js"></script>
     <script src="game.js"></script>

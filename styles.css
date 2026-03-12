@@ -152,6 +152,205 @@ body {
     flex-shrink: 0;
 }
 
+/* === LOGIN === */
+.login-container {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 80px 20px 40px;
+    text-align: center;
+}
+
+.login-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    margin-top: 40px;
+}
+
+.login-field {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.login-field label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.login-field select,
+.login-field input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.login-field select:focus,
+.login-field input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.login-error {
+    color: var(--error);
+    font-size: 0.85rem;
+    min-height: 20px;
+    margin-bottom: 12px;
+}
+
+.login-btn {
+    width: 100%;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.login-btn:hover { background: var(--primary-light); transform: translateY(-1px); }
+
+/* === USER BAR === */
+.user-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 0 4px;
+}
+
+.user-greeting {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 0.95rem;
+}
+
+.logout-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.8rem;
+    transition: var(--transition);
+}
+
+.logout-btn:hover { border-color: var(--text-muted); color: var(--text); }
+
+/* === PROGRESS DASHBOARD === */
+.progress-dashboard {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 32px;
+}
+
+.progress-dashboard h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+}
+
+.progress-summary {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.progress-summary-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-light);
+}
+
+.progress-summary-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.progress-levels { display: flex; flex-direction: column; gap: 12px; }
+
+.progress-level-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.progress-level-info {
+    display: flex;
+    justify-content: space-between;
+    width: 140px;
+    flex-shrink: 0;
+}
+
+.progress-level-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.progress-level-pct {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.progress-level-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-level-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease;
+}
+
+.progress-status {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 80px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.progress-status.mastered { color: var(--success); }
+.progress-status.good { color: var(--bloom-2); }
+.progress-status.started { color: var(--warning); }
+.progress-status.locked { color: var(--text-muted); }
+
 /* === GUIDE NOTICE === */
 .guide-notice {
     background: var(--warning-bg);
